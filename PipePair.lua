@@ -13,6 +13,8 @@ function PipePair:init(y)
 
     self.remove = false
 
+    -- whether or not this pair of pipes has been scored
+    self.scored = false
 end
 
 function PipePair:update(dt)
