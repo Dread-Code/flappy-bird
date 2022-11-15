@@ -79,10 +79,21 @@ function love.load()
     gStateMachine:change('title')
 
     love.keyboard.keysPressed = {}
+
+    -- initialize mouse input table
+    love.mouse.buttonsPressed = {}
 end
 
 function love.resize(w, h)
     push:resize(w,h)
+end
+
+--[[
+    LÖVE2D callback fired each time a mouse button is pressed; gives us the
+    X and Y of the mouse, as well as the button in question.
+]]
+function love.mousepressed(x, y, button)
+    love.mouse.buttonsPressed[button] = true
 end
 
 function love.keyboard.wasPressed(key)
@@ -100,6 +111,13 @@ function love.keypressed(key)
     end
 end
 
+--[[
+    Equivalent to our keyboard function from before, but for the mouse buttons.
+]]
+function love.mouse.wasPressed(button)
+    return love.mouse.buttonsPressed[button]
+end
+
 function love.update(dt)
     -- update background and ground scroll offsets
     backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % 
@@ -111,6 +129,7 @@ function love.update(dt)
 
     -- reset input table
     love.keyboard.keysPressed = {}
+    love.mouse.buttonsPressed = {}
 end
 
 function love.draw()
